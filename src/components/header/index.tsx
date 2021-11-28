@@ -4,6 +4,7 @@ import Link from 'next/link'
 
 import { SignInButton } from '../sign-in-button'
 import styles from './styles.module.scss'
+import { ActiveLink } from '../active-link'
 
 export function Header() {
   const route = useRouter()
@@ -14,16 +15,12 @@ export function Header() {
         <Image width={100} height={30} src="/images/logo.svg" alt="ig.news" />
 
         <nav>
-          <Link href='/'>
-            <a className={route.pathname === '/' ? styles.active : ''}>
-              Home
-            </a>
-          </Link>
-          <Link href='/posts'>
-            <a className={route.pathname.includes('/posts') ? styles.active : ''}>
-              Posts
-            </a>
-          </Link>
+          <ActiveLink activeClassName={styles.active} href='/'>
+            <a>Home</a>
+          </ActiveLink>
+          <ActiveLink activeClassName={styles.active} href='/posts'>
+            <a>Posts</a>
+          </ActiveLink>
         </nav>
 
         <SignInButton />
