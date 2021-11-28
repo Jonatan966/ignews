@@ -1,8 +1,9 @@
 import type { GetStaticProps, NextPage } from 'next'
 import Image from 'next/image'
 
-import { stripe } from '../services/stripe'
 import { SubscribeButton } from '../components/subscribe-button'
+import { AppHead } from '../components/app-head'
+import { stripe } from '../services/stripe'
 
 import styles from './home.module.scss'
 
@@ -15,24 +16,28 @@ interface HomeProps {
 
 const Home: NextPage<HomeProps> = ({ product }) => {
   return (
-    <main className={styles.contentContainer}>
-      <section className={styles.hero}>
-        <span>👏 Hey, welcome</span>
-        <h1>News about the <span>React</span> world.</h1>
-        <p>
-          Get access to all the publications <br />
-          <span>for {product.amount} month</span>
-        </p>
-        <SubscribeButton priceId={product.priceId} />
-      </section>
+    <>
+      <AppHead title='Home' />
 
-      <Image
-        width={336}
-        height={521}
-        src="/images/avatar.svg"
-        alt="Girl coding"
-      />
-    </main>
+      <main className={styles.contentContainer}>
+        <section className={styles.hero}>
+          <span>👏 Hey, welcome</span>
+          <h1>News about the <span>React</span> world.</h1>
+          <p>
+            Get access to all the publications <br />
+            <span>for {product.amount} month</span>
+          </p>
+          <SubscribeButton priceId={product.priceId} />
+        </section>
+
+        <Image
+          width={336}
+          height={521}
+          src="/images/avatar.svg"
+          alt="Girl coding"
+        />
+      </main>
+    </>
   )
 }
 
