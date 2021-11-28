@@ -2,7 +2,7 @@
   max-width: 1120px;
   margin: 0 auto;
   padding: 0 2rem;
-  height: calc(100vh - 5rem);
+  min-height: calc(100vh - 5rem);
 
   display: flex;
   align-items: center;
@@ -11,6 +11,7 @@
 
 .hero {
   max-width: 600px;
+  margin: 2rem 0;
 
   & > span {
     font-size: 1.5rem;
@@ -41,5 +42,21 @@
 
   button {
     margin-top: 2.5rem;
+  }
+}
+
+.girlImageContainer {
+  max-width: 17.5rem;
+  width: 100%;
+}
+
+@media (max-width: 720px) {
+  .contentContainer {
+    flex-direction: column-reverse;
+  }
+
+  .girlImageContainer {
+    max-width: 12rem;
+    margin: auto;
   }
 }

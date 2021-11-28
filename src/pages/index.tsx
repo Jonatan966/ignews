@@ -30,12 +30,15 @@ const Home: NextPage<HomeProps> = ({ product }) => {
           <SubscribeButton priceId={product.priceId} />
         </section>
 
-        <Image
-          width={336}
-          height={521}
-          src="/images/avatar.svg"
-          alt="Girl coding"
-        />
+        <div className={styles.girlImageContainer}>
+          <Image
+            width={250}
+            height={521}
+            layout='responsive'
+            src="/images/avatar.svg"
+            alt="Girl coding"
+          />
+        </div>
       </main>
     </>
   )
