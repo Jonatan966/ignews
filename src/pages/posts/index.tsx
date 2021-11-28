@@ -1,4 +1,5 @@
 import { GetStaticProps, NextPage } from 'next'
+import Link from 'next/link'
 import Prismic from '@prismicio/client'
 import { RichText } from 'prismic-dom'
 
@@ -25,11 +26,13 @@ const Posts: NextPage<PostsProps> = ({ posts }) => {
       <main className={styles.container}>
         <div className={styles.posts}>
           {posts.map(post => (
-            <a key={post.slug} href="#">
-              <time>{post.updatedAt}</time>
-              <strong>{post.title}</strong>
-              <p>{post.excerpt}</p>
-            </a>
+            <Link href={`/posts/${post.slug}`} key={post.slug}>
+              <a>
+                <time>{post.updatedAt}</time>
+                <strong>{post.title}</strong>
+                <p>{post.excerpt}</p>
+              </a>
+            </Link>
           ))}
         </div>
       </main>
