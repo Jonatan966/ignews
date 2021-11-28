@@ -1,18 +1,35 @@
-import { useRouter } from 'next/router'
+import { useState } from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
+import { FiMenu, FiX } from 'react-icons/fi'
 
 import { SignInButton } from '../sign-in-button'
-import styles from './styles.module.scss'
 import { ActiveLink } from '../active-link'
 
+import styles from './styles.module.scss'
+
 export function Header() {
-  const route = useRouter()
+  const [isOpenedMenu, setIsOpenedMenu] = useState(false)
 
   return (
     <header className={styles.headerContainer}>
-      <div className={styles.headerContent}>
-        <Image width={100} height={30} src="/images/logo.svg" alt="ig.news" />
+      <div className={`${styles.headerContent} ${!isOpenedMenu ? styles.hiddenMenu : ''}`}>
+        <div className={styles.mobileContainer}>
+          <div className={styles.imageContainer}>
+            <Image
+              layout='fill'
+              src="/images/logo.svg"
+              alt="ig.news"
+            />
+          </div>
+          
+          <button type='button' onClick={() => setIsOpenedMenu(!isOpenedMenu)}>
+              {isOpenedMenu ? (
+                <FiX size='3rem' color='var(--white)' />
+              ) : (
+                <FiMenu size='3rem' color='var(--white)' />
+              )}
+          </button>
+        </div>
 
         <nav>
           <ActiveLink activeClassName={styles.active} href='/'>

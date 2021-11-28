@@ -1,5 +1,11 @@
 .headerContainer {
   height: 5rem;
+
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  
+  background: var(--gray-900);
   border-bottom: 1px solid var(--gray-800);
 }
 
@@ -9,6 +15,9 @@
   margin: 0 auto;
 
   padding: 0 2rem;
+
+  background: var(--gray-900);
+  border-bottom: 1px solid var(--gray-800);
 
   display: flex;
   align-items: center;
@@ -58,5 +67,92 @@
 
   button {
     margin-left: auto;
+  }
+
+  .imageContainer {
+    position: relative;
+    width: 7rem;
+    height: 3rem;
+  }
+
+  .mobileContainer button {
+    display: none;
+
+    background: none;
+    border: none;
+    font-size: 0;
+  }
+}
+
+@media (max-width: 720px) {
+  .headerContent {
+    padding: 0 1rem;
+
+    nav {
+      margin-left: 2rem;
+    }
+  }
+}
+
+@media (max-width: 575px) {
+  .headerContent {
+    flex-direction: column;
+    align-items: stretch;
+
+    height: auto;
+    padding: 1rem;
+    gap: 1rem;
+
+    .mobileContainer {
+      height: 3rem;
+      width: 100%;
+      display: flex;
+
+      justify-content: space-between;
+
+      button {
+        display: block;
+      }
+    }
+
+    nav {
+      height: auto;
+      margin: initial;
+      margin-top: 1rem;
+
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      text-align: center;
+
+      a {
+        height: 3.5rem;
+        line-height: 3.5rem;
+      }
+
+      a + a {
+        margin-left: 0;
+      }
+
+      .active {
+        background: var(--yellow-500);
+        border-radius: 3rem;
+      }
+
+      .active:after {
+        display: none;
+      }
+    }
+
+    > button {
+      margin: 0;
+    }
+
+    &.hiddenMenu {
+      nav, > button {
+        display: none;
+      }
+    }
   }
 }
