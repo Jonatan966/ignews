@@ -3,6 +3,7 @@ import { query as q } from 'faunadb'
 import Providers from 'next-auth/providers'
 
 import { fauna } from '../../../services/fauna'
+import { session } from 'next-auth/client'
 
 export default NextAuth({
   providers: [
@@ -16,6 +17,42 @@ export default NextAuth({
     signingKey: process.env.SIGNING_KEY || '',
   },
   callbacks: {
+    async session(session) {
+      try {
+        const userActiveSubscription = await fauna.query(
+          q.Get(
+            q.Intersection([
+              q.Match(
+                q.Index('subscription_by_user_ref'),
+                q.Select(
+                  'ref',
+                  q.Get(
+                    q.Match(
+                      q.Index('user_by_email'),
+                      q.Casefold(String(session.user?.email)),
+                    ),
+                  ),
+                ),
+              ),
+              q.Match(
+                q.Index('subscription_by_status'),
+                'active',
+              ),
+            ]),
+          ),
+        )
+  
+        return {
+          ...session,
+          activeSubscription: userActiveSubscription,
+        }
+      } catch {
+        return {
+          ...session,
+          activeSubscription: null,
+        }
+      }
+    },
     async signIn(user, account) {
       const { email } = user
       const { id } = account
