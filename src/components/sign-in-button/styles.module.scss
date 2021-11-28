@@ -17,7 +17,7 @@
     height: 20px;
   }
 
-  svg:first-child {
+  svg.githubIcon {
     margin-right: 1rem;
   }
 
@@ -25,9 +25,18 @@
     margin-left: 1rem;
   }
 
+  svg.spinnerIcon {
+    animation: rotate 1.5s linear infinite;
+    color: var(--yellow-500);
+  }
+
   transition: filter 0.2s;
 
   &:hover {
     filter: brightness(0.8);
   }
+}
+
+@keyframes rotate {
+  to{ transform: rotate(360deg); }
 }

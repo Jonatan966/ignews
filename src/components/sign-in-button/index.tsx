@@ -1,20 +1,52 @@
-import { FaGithub } from 'react-icons/fa'
-import { FiX } from 'react-icons/fi'
+import { useState } from 'react'
+import { FiX, FiGithub, FiLoader } from 'react-icons/fi'
 import { signIn, signOut, useSession } from 'next-auth/client'
 
 import styles from './styles.module.scss'
 
 export function SignInButton() {
-  const [session] = useSession()
+  const [session, isLoading] = useSession()
+  const [isLoadingAuth, setIsLoadingAuth] = useState(false)
+
+  const delayedSetIsLoadingAuthToFalse = () =>
+    setTimeout(() => setIsLoadingAuth(false), 500)
+
+  async function handleSignIn() {
+    setIsLoadingAuth(true)
+
+    try {
+      await signIn('github')
+    } finally {
+      delayedSetIsLoadingAuthToFalse()
+    }
+  }
+
+  async function handleSignOut() {
+    setIsLoadingAuth(true)
+
+    try {
+      await signOut()
+    } finally {
+      delayedSetIsLoadingAuthToFalse()
+    }
+  }
+
+  if (isLoading || isLoadingAuth) {
+    return (
+      <button className={styles.signInButton}>
+        <FiLoader className={styles.spinnerIcon} />
+      </button>
+    )
+  }
 
   if (session) {
     return (
       <button
         type="button"
         className={styles.signInButton}
-        onClick={() => signOut()}
+        onClick={handleSignOut}
       >
-        <FaGithub color="var(--green-500)" />
+        <FiGithub className={styles.githubIcon} color="var(--green-500)" />
         {session.user?.name}
         <FiX color="var(--gray-200)" className={styles.closeIcon} />
       </button>
@@ -25,9 +57,9 @@ export function SignInButton() {
     <button
       type="button"
       className={styles.signInButton}
-      onClick={() => signIn('github')}
+      onClick={handleSignIn}
     >
-      <FaGithub color="var(--yellow-500)" />
+      <FiGithub className={styles.githubIcon} color="var(--yellow-500)" />
       Sign in with Github
     </button>
   )
