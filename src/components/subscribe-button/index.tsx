@@ -40,6 +40,17 @@ export function SubscribeButton({ priceId }: SubscribeButtonProps) {
     }
   }
 
+  if (session?.activeSubscription) {
+    return (
+      <button
+        type='button'
+        className={`${styles.subscribeButton} ${styles.cancelButton}`}
+      >
+        Cancel subscription
+      </button>
+    )
+  }
+
   return (
     <button
       onClick={handleSubscribe}
