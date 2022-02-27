@@ -1,6 +1,4 @@
-<div align='center'>
-  <h1>ig.news</h1>
-</div>
+![IgNews](.github/logo.png)
 
 Este projeto consiste em um blog por assinatura
 
