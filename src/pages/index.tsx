@@ -27,7 +27,7 @@ const Home: NextPage<HomeProps> = ({ product }) => {
             Get access to all the publications <br />
             <span>for {product.amount} month</span>
           </p>
-          <SubscribeButton priceId={product.priceId} />
+          <SubscribeButton />
         </section>
 
         <div className={styles.girlImageContainer}>
