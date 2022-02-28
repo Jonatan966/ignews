@@ -97,4 +97,33 @@ describe("SubscribeButton component", () => {
       expect(redirectToCheckoutMock).toHaveBeenCalled();
     });
   });
+
+  it("show error alert if have subscription error", async () => {
+    jest.spyOn(window, 'alert').mockImplementation(() => {});
+
+    const apiMocked = mocked(api.post);
+    const useSessionMocked = mocked(useSession);
+
+    apiMocked.mockRejectedValueOnce({
+      message: 'fake error message'
+    })
+
+    useSessionMocked.mockReturnValueOnce([
+      {
+        user: { name: "John Doe", email: "john.doe@example.com" },
+        expires: "fake-expires",
+      },
+      false,
+    ]);
+
+    render(<SubscribeButton />);
+
+    const subscribeButton = screen.getByText("Subscribe now");
+
+    fireEvent.click(subscribeButton);
+
+    await waitFor(() => {
+      expect(window.alert).toHaveBeenCalledWith("fake error message");
+    });
+  });
 });
