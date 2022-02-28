@@ -1,8 +1,11 @@
 import { render, screen } from "@testing-library/react";
 import { mocked } from "jest-mock";
-import { getSession, useSession } from "next-auth/client";
+import { useSession } from "next-auth/client";
 import { useRouter } from "next/router";
-import Post, { getStaticProps } from "../../pages/posts/preview/[slug]";
+import Post, {
+  getStaticProps,
+  getStaticPaths,
+} from "../../pages/posts/preview/[slug]";
 import { getPrismicClient } from "../../services/prismic";
 
 const post = {
@@ -39,14 +42,14 @@ describe("Post Preview page", () => {
       { activeSubscription: "fake-active-subscription" },
       false,
     ]);
-    
+
     useRouterMocked.mockReturnValueOnce({
       push: pushMock,
     } as any);
 
     render(<Post post={post} />);
 
-    expect(pushMock).toHaveBeenCalledWith('/posts/my-new-post');
+    expect(pushMock).toHaveBeenCalledWith("/posts/my-new-post");
   });
 
   it("loads initial data", async () => {
@@ -64,8 +67,8 @@ describe("Post Preview page", () => {
 
     const response = await getStaticProps({
       params: {
-        slug: 'my-new-post'
-      }
+        slug: "my-new-post",
+      },
     } as any);
 
     expect(response).toEqual(
@@ -78,6 +81,16 @@ describe("Post Preview page", () => {
             updatedAt: "01 de abril de 2021",
           },
         },
+      })
+    );
+  });
+
+  it("loads static paths", async () => {
+    const pathsResponse = await getStaticPaths();
+
+    expect(pathsResponse).toEqual(
+      expect.objectContaining({
+        paths: [],
       })
     );
   });
