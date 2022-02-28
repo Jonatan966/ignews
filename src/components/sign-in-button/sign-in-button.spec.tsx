@@ -1,6 +1,6 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { mocked } from "jest-mock";
-import { signIn, useSession } from "next-auth/client";
+import { signIn, signOut, useSession } from "next-auth/client";
 import React from "react";
 import { SignInButton } from "./index";
 
@@ -46,5 +46,26 @@ describe("SignInButton component", () => {
     fireEvent.click(signInButton);
 
     expect(signInMocked).toHaveBeenCalledWith("github");
+  });
+
+  it("sign out", async () => {
+    const signOutMocked = mocked(signOut);
+    const useSessionMocked = mocked(useSession);
+
+    useSessionMocked.mockReturnValueOnce([
+      {
+        user: { name: "John Doe", email: "john.doe@example.com" },
+        expires: "fake-expires",
+      },
+      false,
+    ]);
+
+    render(<SignInButton />);
+
+    const signOutButton = screen.getByText("John Doe");
+
+    fireEvent.click(signOutButton);
+
+    expect(signOutMocked).toHaveBeenCalled();
   });
 });
