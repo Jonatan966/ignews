@@ -1,6 +1,7 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { mocked } from "jest-mock";
-import { useSession } from "next-auth/client";
+import { signIn, useSession } from "next-auth/client";
+import React from "react";
 import { SignInButton } from "./index";
 
 jest.mock("next-auth/client");
@@ -30,5 +31,20 @@ describe("SignInButton component", () => {
     render(<SignInButton />);
 
     expect(screen.getByText("John Doe")).toBeInTheDocument();
+  });
+
+  it("redirects to sign in page", () => {
+    const signInMocked = mocked(signIn);
+    const useSessionMocked = mocked(useSession);
+
+    useSessionMocked.mockReturnValue([null, false]);
+
+    render(<SignInButton />);
+
+    const signInButton = screen.getByText("Sign in with Github");
+
+    fireEvent.click(signInButton);
+
+    expect(signInMocked).toHaveBeenCalledWith("github");
   });
 });
