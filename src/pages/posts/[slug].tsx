@@ -62,7 +62,7 @@ export const getServerSideProps: GetServerSideProps<PostProps, QueryParams> =
       slug,
       title: RichText.asText(response.data.title),
       content: RichText.asHtml(response.data.content),
-      updatedAt: new Date(response.last_publication_date || '')
+      updatedAt: new Date(response.last_publication_date as string)
         .toLocaleDateString('pt-BR', 
           {
             day: '2-digit',

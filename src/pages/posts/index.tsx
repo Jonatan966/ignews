@@ -57,8 +57,8 @@ export const getStaticProps: GetStaticProps = async () => {
       title: RichText.asText(post.data.title),
       excerpt: post.data.content.find(
         (content: { type: string }) => content.type === 'paragraph'
-      )?.text ?? '',
-      updatedAt: new Date(post.last_publication_date || '')
+      )?.text as string,
+      updatedAt: new Date(post.last_publication_date as string)
         .toLocaleDateString('pt-BR', 
           {
             day: '2-digit',

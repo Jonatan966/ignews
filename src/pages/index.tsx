@@ -57,7 +57,7 @@ export const getStaticProps: GetStaticProps<HomeProps> = async () => {
         style: 'currency',
         currency: 'USD'
       }
-    ).format((price.unit_amount ?? 0) / 100),
+    ).format((price.unit_amount as number) / 100),
   }
 
   return {

@@ -80,7 +80,7 @@ export const getStaticProps: GetStaticProps<PostPreviewProps, QueryParams> =
       slug,
       title: RichText.asText(response.data.title),
       content: RichText.asHtml(response.data.content.splice(0, 3)),
-      updatedAt: new Date(response.last_publication_date || '')
+      updatedAt: new Date(response.last_publication_date as string)
         .toLocaleDateString('pt-BR', 
           {
             day: '2-digit',
